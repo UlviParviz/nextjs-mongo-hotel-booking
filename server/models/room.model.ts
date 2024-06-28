@@ -22,6 +22,7 @@ export interface IReview extends Document {
 }
 
 export interface IRoom extends Document {
+  _id: string;
   name: string;
   description: string;
   pricePerNight: number;
