@@ -15,7 +15,9 @@
     "next": "14.2.4",
     "next-connect": "^1.0.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-hot-toast": "^2.4.1",
+    "react-star-ratings": "^2.3.0"
   },
   "devDependencies": {
     "@types/node": "^20",

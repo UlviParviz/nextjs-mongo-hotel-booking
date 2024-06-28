@@ -12,7 +12,7 @@ const Header = () => {
                 src="./images/logo_size.jpg"
                 alt="Bookly"
                 width={`110px`}
-                height={`110px`}
+                height={`105px`}
               />
             </a>
           </div>
