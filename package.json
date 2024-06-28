@@ -10,6 +10,7 @@
     "seeder": "tsc seeder/seeder.ts --outDir .temp && node .temp/seeder/seeder.js && (rm -rf .temp || rmdir /s /q .temp)"
   },
   "dependencies": {
+    "bootstrap": "^5.3.3",
     "mongoose": "^8.4.4",
     "next": "14.2.4",
     "next-connect": "^1.0.0",
