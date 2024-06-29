@@ -4,16 +4,27 @@ import React, { useState } from "react";
 
 const Search = () => {
   const [location, setLocation] = useState("");
+  const [guests, setGuests] = useState("");
+  const [category, setCategory] = useState("");
   const router = useRouter();
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push(`/?location=${location}`);
+
+    const queryString = [
+      location && `location=${encodeURIComponent(location)}`,
+      guests && `guestCapacity=${encodeURIComponent(guests)}`,
+      category && `category=${encodeURIComponent(category)}`,
+    ]
+      .filter(Boolean)
+      .join("&");
+
+    router.push(`/?${queryString}`);
   };
   return (
-    <div className="row wrapper mt-5">
-      <div className="col-10 col-lg-5">
+    <div className="row wrapper py-5">
+      <div className="col-11 col-lg-5 ">
         <form className="shadow rounded" onSubmit={submitHandler}>
-          <h2 className="mb-3">Search Rooms</h2>
+          <h2 className="mb-3 stays-heading text-center ">Search Rooms</h2>
           <div className="form-group mt-3">
             <label htmlFor="location_field" className="mb-1">
               {" "}
@@ -34,13 +45,22 @@ const Search = () => {
               {" "}
               No. of Guests{" "}
             </label>
-            <select className="form-select" id="guest_field">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
+            <select
+              className="form-select"
+              id="guest_field"
+              value={guests}
+              onChange={(e) => setGuests(e.target.value)}
+            >
+              <option value="" disabled>
+                Choose Number Of Guests
+              </option>
+              {[1, 2, 3, 4, 5, 6].map((num) => {
+                return (
+                  <option key={num} value={num}>
+                    {num}
+                  </option>
+                );
+              })}
             </select>
           </div>
 
@@ -49,10 +69,22 @@ const Search = () => {
               {" "}
               Room Type{" "}
             </label>
-            <select className="form-select" id="room_type_field">
-              <option value="King">King</option>
-              <option value="Single">Single</option>
-              <option value="Twins">Twins</option>
+            <select
+              className="form-select"
+              id="room_type_field"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="" disabled>
+                Choose Category
+              </option>
+              {["King", "Single", "Twins"].map((value) => {
+                return (
+                  <option key={value} value={value}>
+                    {value}
+                  </option>
+                );
+              })}
             </select>
           </div>
 

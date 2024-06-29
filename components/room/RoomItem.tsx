@@ -31,11 +31,11 @@ const RoomItem = ({ room }: Props) => {
           </h5>
           <div className="mt-auto">
             <p className="card-text mt-2">
-              <b>${room?.pricePerNight}</b> / night
+              <b>${room?.pricePerNight}</b> / Night
             </p>
           </div>
           <div>
-            <div className="d-flex">
+            <div className="d-flex align-items-center justify-content-between">
               <StarRatings
                 rating={room?.ratings}
                 starRatedColor="#e61e4d"

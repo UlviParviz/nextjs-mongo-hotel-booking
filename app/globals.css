@@ -174,7 +174,7 @@ body {
 }
 
 .wrapper form {
-  padding: 2.5rem 3rem;
+  padding: 1.2rem 2rem;
 }
 
 .wrapper form a {
@@ -320,7 +320,6 @@ nav {
 .no-of-reviews {
   font-size: 0.85rem;
   color: grey;
-  margin-left: 0.5rem;
 }
 
 /* Room Details Page */
@@ -419,4 +418,9 @@ footer {
   border-color: #f3f4f6;
   border-radius: 0.3rem;
   color: #e61e4d;
+}
+
+.alertDiv {
+  width: 80%;
+  margin: 0 auto;
 }
