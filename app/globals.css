@@ -258,9 +258,7 @@ nav {
 }
 
 .back-to-search {
-  font-size: 1rem;
   color: #222;
-  font-weight: 500;
   text-decoration: none;
   transition: all;
   transition-duration: 0.5s;
@@ -301,10 +299,12 @@ nav {
   background-color: #e61e4d;
   color: white;
   text-decoration: none;
+  transition: all 0.6s;
 }
 
 .card-body .view-btn:hover {
-  background-color: #e61e4d;
+  background-color: #bb2d3b;
+  border-color: #bb2d3b;
   color: white;
 }
 

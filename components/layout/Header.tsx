@@ -1,20 +1,31 @@
+"use client";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const Header = () => {
+  const router = useRouter();
+
+  const handleLogoClick = (e: any) => {
+    e.preventDefault();
+    router.push("/");
+  };
+
   return (
     <nav className="navbar sticky-top p-0">
       <div className="container">
         <div className="col-6 col-lg-3 p-0">
           <div className="navbar-brand p-0">
-            <a href="/">
+            <Link href="/" passHref>
               <img
+                onClick={handleLogoClick}
                 style={{ cursor: "pointer" }}
                 src="./images/logo_size.jpg"
                 alt="Bookly"
                 width={`110px`}
                 height={`105px`}
               />
-            </a>
+            </Link>
           </div>
         </div>
 

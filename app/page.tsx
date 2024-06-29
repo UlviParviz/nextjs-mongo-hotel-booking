@@ -20,6 +20,7 @@ export default async function HomePage({
   searchParams: string;
 }) {
   const data = await getRooms(searchParams);
+  
 
   if (data?.message) {
     return <Error error={data} />;
