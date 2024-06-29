@@ -13,7 +13,7 @@ interface Props {
 const RoomItem = ({ room }: Props) => {
   return (
     <div className="col-sm-12 col-md-6 col-lg-3 my-3 d-flex">
-      <div className="card p-2 w-100">
+      <div className="card w-100">
         <Image
           className="card-img-top mx-auto"
           src={
@@ -44,8 +44,8 @@ const RoomItem = ({ room }: Props) => {
                 starSpacing="1px"
                 name="rating"
               />
-              <span className="no-of-reviews">
-                ({room?.numOfReviews} Reviews)
+              <span className="no-of-reviews fw-bold">
+                {`${room?.numOfReviews} Reviews`}
               </span>
             </div>
             <Link

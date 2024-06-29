@@ -88,8 +88,9 @@ const Search = () => {
             </select>
           </div>
 
-          <button type="submit" className="btn form-btn w-100 py-2">
-            Search
+          <button type="submit" className="btn form-btn btn-danger w-100 py-2 d-flex justify-content-center align-items-center gap-2">
+            <span className="">Search</span>
+            <i aria-hidden className="fa-solid fa-search"></i>
           </button>
         </form>
       </div>

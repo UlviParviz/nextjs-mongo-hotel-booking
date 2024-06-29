@@ -29,7 +29,7 @@ const CustomPagination = ({ resPerPage, filteredRoomsCount }: Props) => {
   return (
     <div>
       {resPerPage < filteredRoomsCount && (
-        <div className="d-flex justify-content-center align-items-center">
+        <div className="d-flex justify-content-center align-items-center mt-4">
           <Pagination
             activePage={page}
             itemsCountPerPage={resPerPage}

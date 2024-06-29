@@ -31,12 +31,12 @@ const Rooms = ({ data }: Props) => {
           <Link href="/search" className="back-to-search">
             {location ? (
               <h5 className="stays-heading d-flex gap-2 align-items-center">
-                <i className="fa fa-arrow-left"></i> <span>Back to Search</span>
+                <i aria-hidden className="fa fa-arrow-left"></i> <span>Back to Search</span>
               </h5>
             ) : (
               <h5 className="stays-heading d-flex gap-2 align-items-center">
                 <span className="">Search</span>
-                <i className="fa-solid fa-search"></i>
+                <i aria-hidden className="fa-solid fa-search"></i>
               </h5>
             )}
           </Link>

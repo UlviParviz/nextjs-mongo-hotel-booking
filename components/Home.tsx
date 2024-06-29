@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react";
 import RoomItem from "./room/RoomItem";
 import { IRoom } from "@/server/models/room.model";

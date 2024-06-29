@@ -270,7 +270,7 @@ nav {
 
 .card {
   height: 100%;
-  border: 0px;
+  border: none;
 }
 
 .card-title a {
@@ -306,10 +306,6 @@ nav {
   background-color: #bb2d3b;
   border-color: #bb2d3b;
   color: white;
-}
-
-.card-img-top {
-  border-radius: 0.8rem;
 }
 
 .ratings {

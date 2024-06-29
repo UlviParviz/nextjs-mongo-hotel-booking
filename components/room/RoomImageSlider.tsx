@@ -1,3 +1,5 @@
+"use client"
+
 import { IImage } from "@/server/models/room.model";
 import Image from "next/image";
 import React from "react";

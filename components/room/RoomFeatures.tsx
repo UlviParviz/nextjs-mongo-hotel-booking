@@ -1,3 +1,5 @@
+"use client"
+
 import { IRoom } from "@/server/models/room.model";
 import React from "react";
 
@@ -10,21 +12,20 @@ const RoomFeatures = ({ room }: Props) => {
     <div className="features mt-5">
       <h3 className="mb-4">Features:</h3>
       <div className="room-feature">
-        <i className="fa fa-cog fa-fw fa-users" aria-hidden="true"></i>
+        <i aria-hidden className="fa fa-cog fa-fw fa-users"></i>
         <p>{room?.guestCapacity} Guests</p>
       </div>
       <div className="room-feature">
-        <i className="fa fa-cog fa-fw fa-bed" aria-hidden="true"></i>
+        <i aria-hidden className="fa fa-cog fa-fw fa-bed" ></i>
         <p>{room?.numOfBeds} Beds</p>
       </div>
       <div className="room-feature">
-        <i
+        <i aria-hidden
           className={
             room?.isBreakfast
               ? "fa fa-check text-success"
               : "fa fa-times text-danger"
           }
-          aria-hidden="true"
         ></i>
         <p>Breakfast</p>
       </div>
@@ -35,7 +36,7 @@ const RoomFeatures = ({ room }: Props) => {
               ? "fa fa-check text-success"
               : "fa fa-times text-danger"
           }
-          aria-hidden="true"
+          aria-hidden
         ></i>
         <p>Internet</p>
       </div>
@@ -46,7 +47,7 @@ const RoomFeatures = ({ room }: Props) => {
               ? "fa fa-check text-success"
               : "fa fa-times text-danger"
           }
-          aria-hidden="true"
+          aria-hidden
         ></i>
         <p>Air Conditioned</p>
       </div>
@@ -57,7 +58,7 @@ const RoomFeatures = ({ room }: Props) => {
               ? "fa fa-check text-success"
               : "fa fa-times text-danger"
           }
-          aria-hidden="true"
+          aria-hidden
         ></i>
         <p>Pets Allowed</p>
       </div>
@@ -68,7 +69,7 @@ const RoomFeatures = ({ room }: Props) => {
               ? "fa fa-check text-success"
               : "fa fa-times text-danger"
           }
-          aria-hidden="true"
+          aria-hidden
         ></i>
         <p>Room Cleaning</p>
       </div>
