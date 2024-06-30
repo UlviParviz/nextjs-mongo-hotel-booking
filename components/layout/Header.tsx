@@ -1,20 +1,29 @@
 "use client";
-import { log } from "console";
+import { setIsAuthenticated, setUser } from "@/redux/features/userSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 
 const Header = () => {
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.auth);
+
   const { data } = useSession();
   const router = useRouter();
+
+  useEffect(() => {
+    if (data) {
+      dispatch(setUser(data?.user));
+      dispatch(setIsAuthenticated(true));
+    }
+  }, [data]);
 
   const handleLogoClick = (e: any) => {
     e.preventDefault();
     router.push("/");
   };
-
-  console.log(data?.user);
 
   const logoutHandler = () => {
     signOut();
@@ -39,7 +48,7 @@ const Header = () => {
         </div>
 
         <div className="col-6 col-lg-3 mt-md-0 text-end">
-          {data?.user ? (
+          {user ? (
             <div className="ml-4 dropdown d-line">
               <button
                 className="btn dropdown-toggle"
@@ -51,17 +60,17 @@ const Header = () => {
                 <figure className="avatar avatar-nav">
                   <img
                     src={
-                      data?.user?.avatar
+                      user?.avatar
                         ? data?.user?.avatar?.url
                         : "/images/default_avatar.jpg"
                     }
-                    alt={`${data?.user?.name}`}
+                    alt={`${user?.name}`}
                     className="rounded-circle placeholder-glow"
                   />
                 </figure>
                 <span className="placeholder-glow ps-1 fw-bold fs-6 text-capitalize">
                   {" "}
-                  {data?.user?.name}
+                  {user?.name}
                 </span>
               </button>
 

@@ -17,6 +17,8 @@ interface Props {
 const Rooms = ({ data }: Props) => {
   const searchParams = useSearchParams();
   const location = searchParams.get("location");
+  const guest = searchParams.get("guestCapacity");
+  const category = searchParams.get("category");
 
   const { rooms, resPerPage, filteredRoomsCount } = data;
   return (
@@ -29,9 +31,10 @@ const Rooms = ({ data }: Props) => {
         </h5>
         <div className="d-flex justify-content-end sm-mt-2">
           <Link href="/search" className="back-to-search">
-            {location ? (
+            {location || category || guest ? (
               <h5 className="stays-heading d-flex gap-2 align-items-center">
-                <i aria-hidden className="fa fa-arrow-left"></i> <span>Back to Search</span>
+                <i aria-hidden className="fa fa-arrow-left"></i>{" "}
+                <span>Back to Search</span>
               </h5>
             ) : (
               <h5 className="stays-heading d-flex gap-2 align-items-center">
