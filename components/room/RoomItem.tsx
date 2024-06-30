@@ -36,14 +36,14 @@ const RoomItem = ({ room }: Props) => {
           </div>
           <div>
             <div className="d-flex align-items-center justify-content-between">
-              <StarRatings
+              {/* <StarRatings
                 rating={room?.ratings}
                 starRatedColor="#e61e4d"
                 numberOfStars={5}
                 starDimension="18px"
                 starSpacing="1px"
                 name="rating"
-              />
+              /> */}
               <span className="no-of-reviews fw-bold">
                 {`${room?.numOfReviews} Reviews`}
               </span>
