@@ -164,7 +164,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 8%;
+  margin-top: 5rem;
+  padding-top: 50px;
 
   font-weight: 700;
 }
