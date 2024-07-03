@@ -1,36 +1,34 @@
 "use client";
 
-import { signIn } from "next-auth/react";
-import Link from "next/link";
+import { useRegisterMutation } from "@/redux/api/authApi";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import { toast } from "react-hot-toast";
+import React, {
+  ChangeEventHandler,
+  FormEvent,
+  useEffect,
+  useState,
+} from "react";
+import toast from "react-hot-toast";
 import ButtonLoader from "../layout/ButtonLoader";
+import Link from "next/link";
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [show, setShow] = useState(false);
+const Register = () => {
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
   const router = useRouter();
-  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
 
-    const result = await signIn("credentials", {
-      redirect: false,
-      email,
-      password,
-    });
+  const [show, setShow] = useState(false);
 
-    setLoading(false);
+  const { name, email, password } = user;
 
-    if (result?.error) {
-      toast.error(result.error);
-    } else {
-      router.replace("/");
-    }
+  const [register, { isLoading, error, isSuccess }] = useRegisterMutation();
+
+  const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
   };
 
   const toggleShow = () => {
@@ -41,21 +39,59 @@ const Login = () => {
     }
   };
 
+  useEffect(() => {
+    if (error && "data" in error) {
+      toast.error(error?.data?.message);
+    }
+
+    if (isSuccess) {
+      router.push("/login");
+      toast.success("Registered successfully");
+    }
+  }, [error, isSuccess]);
+
+  const submitHandler = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const userData = {
+      name,
+      email,
+      password,
+    };
+    register(userData);
+  };
   return (
-    <div className="row wrapper">
+    <div className="wrapper py-5 px-2">
       <div className="col-12 col-lg-6">
         <form className="shadow rounded bg-body" onSubmit={submitHandler}>
-          <h1 className="mb-3 stays-heading text-center">Login</h1>
+          <h1 className="mb-3 stays-heading text-center">Join Us</h1>
+
+          <div className="mb-3">
+            <label htmlFor="name_field" className="form-label">
+              {" "}
+              Full Name{" "}
+            </label>
+            <input
+              type="text"
+              id="name_field"
+              className="form-control"
+              name="name"
+              value={name}
+              onChange={onChange}
+            />
+          </div>
+
           <div className="mb-3">
             <label className="form-label" htmlFor="email_field">
-              Email
+              {" "}
+              Email{" "}
             </label>
             <input
               type="email"
               id="email_field"
               className="form-control"
+              name="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={onChange}
             />
           </div>
 
@@ -68,8 +104,9 @@ const Login = () => {
                 type={show ? "text" : "password"}
                 id="password_field"
                 className="form-control"
+                name="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={onChange}
               />
               <div
                 onClick={toggleShow}
@@ -90,22 +127,16 @@ const Login = () => {
             </div>
           </div>
 
-          <Link href="/password/forgot" className="float-end mt-2">
-            Forgot Password?
-          </Link>
-
           <button
-            id="login_button"
+            disabled={isLoading}
             type="submit"
             className="btn btn-danger form-btn w-100 py-2"
-            disabled={loading}
           >
-            {loading ? <ButtonLoader /> : "Sign in"}
+            {isLoading ? <ButtonLoader /> : "Sign Up"}
           </button>
-
           <div className="mt-3 mb-4">
-            <Link href="/register" className="float-end">
-              New User? Register Here
+            <Link href="/login" className="float-end">
+              Already have an account? Login
             </Link>
           </div>
         </form>
@@ -114,4 +145,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

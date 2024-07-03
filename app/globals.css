@@ -183,9 +183,20 @@ body {
   color: grey;
 }
 
+.end-text {
+  right: 10px; /* Adjust as needed */
+  top: 70%;
+  transform: translateY(-50%);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+
 .form-btn {
-  background-color: #e61e4d;
   border-color: #e61e4d;
+  background-color: #e61e4d;
   color: white;
   margin-top: 2.5rem;
   font-weight: bold;

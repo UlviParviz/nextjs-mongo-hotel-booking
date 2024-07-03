@@ -109,7 +109,10 @@ const Header = () => {
                   href="/login"
                   className="btn btn-danger px-4 text-white login-header-btn float-right"
                 >
-                  Login
+                  <div className="d-flex justify-content-center align-items-center gap-2">
+                    <span>Login</span>
+                    <i aria-hidden className="fa-solid fa-user"></i>
+                  </div>
                 </Link>
               )}
             </>
