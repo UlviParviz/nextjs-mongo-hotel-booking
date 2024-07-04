@@ -95,7 +95,7 @@ const UpdateProfile = () => {
               className="btn form-btn w-100 py-2 btn-danger"
               disabled={isLoading}
             >
-              {isLoading ? <ButtonLoader/> : "UPDATE"}
+              {isLoading ? <ButtonLoader/> : "Update"}
             </button>
           </form>
         </div>

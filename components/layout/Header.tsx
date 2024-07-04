@@ -43,8 +43,6 @@ const Header = () => {
                 alt="Bookly"
                 width={110}
                 height={105}
-                placeholder="blur" // Add placeholder
-                blurDataURL="/images/placeholder.jpg" // Placeholder image
               />
             </Link>
           </div>
@@ -58,7 +56,7 @@ const Header = () => {
                 type="button"
                 id="dropdownMenuButton1"
                 data-bs-toggle="dropdown"
-                aria-expanded="false"
+                aria-expanded={"false"}
               >
                 <figure className="avatar avatar-nav">
                   <Image
@@ -81,7 +79,7 @@ const Header = () => {
 
               <div
                 className="dropdown-menu w-100"
-                aria-labelledby="dropdownMenuButton1"
+                aria-labelledby={"dropdownMenuButton1"}
               >
                 <Link href="/admin/dashboard" className="dropdown-item">
                   Dashboard
@@ -116,7 +114,7 @@ const Header = () => {
                 >
                   <div className="d-flex justify-content-center align-items-center gap-2">
                     <span>Login</span>
-                    <i aria-hidden className="fa-solid fa-user"></i>
+                    <i  className="fa-solid fa-user"></i>
                   </div>
                 </Link>
               )}

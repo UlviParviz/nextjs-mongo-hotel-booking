@@ -170,10 +170,6 @@ body {
   font-weight: 700;
 }
 
-.user-dashboard .wrapper {
-  margin-top: 3rem;
-}
-
 .wrapper form {
   padding: 1.2rem 2rem;
 }
@@ -182,15 +178,16 @@ body {
   font-size: 0.9rem;
   color: grey;
 }
-.dropdown-item:active, .dropdown-item:focus, .dropdown-item:hover {
-  background-color: red !important;
+.dropdown-item:active,
+.dropdown-item:focus,
+.dropdown-item:hover {
+  background-color: #e61e4d !important;
   color: white !important;
 }
 .dropdownItemActive {
-  background-color: red !important;
+  background-color: #e61e4d !important;
   color: white !important;
 }
-
 
 .end-text {
   right: 10px; /* Adjust as needed */
@@ -201,7 +198,6 @@ body {
 .cursor-pointer {
   cursor: pointer;
 }
-
 
 .form-btn {
   border-color: #e61e4d;
@@ -388,23 +384,24 @@ footer {
 
 /* Pagination */
 .page-item.active .page-link {
-  background-color: #e61e4d;
-  border-color: #e61e4d;
-  color: #fff;
+  background-color: #e61e4d !important;
+  border-color: #e61e4d !important;
+  color: #fff !important;
 }
 
 .page-item.active .page-link:hover {
-  color: #fff;
+  color: #fff !important;
   cursor: pointer;
 }
 
 .pagination .page-link {
-  color: #e61e4d;
+  color: #e61e4d !important;
 }
 
 .pagination .page-link:hover {
-  color: #e61e4d;
+  color: #e61e4d !important;
 }
+
 
 /* Booking Details */
 .booking-details p {
@@ -427,14 +424,14 @@ footer {
 }
 
 .list-group-item {
-  border: none;
+  border: none !important;
 }
 
 .list-group-item.active {
-  background-color: #f3f4f6;
-  border-color: #f3f4f6;
+  background-color: #f3f4f6 !important;
+  border-color: #f3f4f6 !important;
   border-radius: 0.3rem;
-  color: #e61e4d;
+  color: #e61e4d !important;
 }
 
 .alertDiv {
