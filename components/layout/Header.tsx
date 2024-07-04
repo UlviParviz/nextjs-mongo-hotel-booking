@@ -5,6 +5,7 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
+import Image from "next/image"; // Import the Next.js Image component
 
 const Header = () => {
   const dispatch = useAppDispatch();
@@ -35,13 +36,15 @@ const Header = () => {
         <div className="col-6 col-lg-3 p-0">
           <div className="navbar-brand p-0">
             <Link href="/" passHref>
-              <img
+              <Image
                 onClick={handleLogoClick}
                 style={{ cursor: "pointer" }}
-                src="./images/logo_size.jpg"
+                src="/images/logo_size.jpg" // Use an absolute path
                 alt="Bookly"
-                width={`110px`}
-                height={`105px`}
+                width={110}
+                height={105}
+                placeholder="blur" // Add placeholder
+                blurDataURL="/images/placeholder.jpg" // Placeholder image
               />
             </Link>
           </div>
@@ -58,7 +61,7 @@ const Header = () => {
                 aria-expanded="false"
               >
                 <figure className="avatar avatar-nav">
-                  <img
+                  <Image
                     src={
                       user?.avatar
                         ? data?.user?.avatar?.url
@@ -66,6 +69,8 @@ const Header = () => {
                     }
                     alt={`${user?.name}`}
                     className="rounded-circle placeholder-glow"
+                    width={50}
+                    height={50}
                   />
                 </figure>
                 <span className="placeholder-glow ps-1 fw-bold fs-6 text-capitalize">

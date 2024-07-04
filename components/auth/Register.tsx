@@ -61,7 +61,7 @@ const Register = () => {
   };
   return (
     <div className="wrapper py-5 px-2">
-      <div className="col-12 col-lg-6">
+      <div className="col-12 col-md-10 col-lg-6">
         <form className="shadow rounded bg-body" onSubmit={submitHandler}>
           <h1 className="mb-3 stays-heading text-center">Join Us</h1>
 
