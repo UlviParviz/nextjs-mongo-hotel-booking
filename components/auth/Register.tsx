@@ -12,6 +12,11 @@ import toast from "react-hot-toast";
 import ButtonLoader from "../layout/ButtonLoader";
 import Link from "next/link";
 
+interface CustomError extends Error {
+  errMessage: string;
+}
+
+
 const Register = () => {
   const [user, setUser] = useState({
     name: "",
@@ -22,6 +27,14 @@ const Register = () => {
   const router = useRouter();
 
   const [show, setShow] = useState(false);
+  const toggleShow = () => {
+    if (show) {
+      setShow(false);
+    } else {
+      setShow(true);
+    }
+  };
+
 
   const { name, email, password } = user;
 
@@ -31,17 +44,11 @@ const Register = () => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const toggleShow = () => {
-    if (show) {
-      setShow(false);
-    } else {
-      setShow(true);
-    }
-  };
 
   useEffect(() => {
     if (error && "data" in error) {
-      toast.error(error?.data?.message);
+      const errorData = error.data as CustomError;
+      toast.error(errorData.errMessage);
     }
 
     if (isSuccess) {
