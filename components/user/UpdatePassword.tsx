@@ -63,7 +63,7 @@ const UpdatePassword = () => {
     <div className="row wrapper">
       <div className="col-10 col-lg-8">
         <form className="shadow rounded bg-body" onSubmit={submitHandler}>
-        <h1 className="mb-3 stays-heading text-center">Update Password</h1>
+        <h2 className="mb-3 stays-heading text-center">Update Password</h2>
 
           <div className="mb-3 position-relative">
             <label className="form-label" htmlFor="old_password_field">

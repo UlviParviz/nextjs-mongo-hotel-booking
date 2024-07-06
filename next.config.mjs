@@ -9,7 +9,13 @@ const nextConfig = {
     CLOUDINARY_API_SECRET: "N6Jl1DxhyfuRZWLXxosniv9Xwxk",
     NEXTAUTH_URL: "http://localhost:3000",
     NEXTAUTH_SECRET: "SKADHAOISDJASKDADSA",
-
+    SMTP_SERVICE: "gmail",
+    SMTP_HOST: "smtp.gmail.com",
+    SMTP_PORT: 2525,
+    SMPTP_USER: "fisfusfoz@gmail.com",
+    SMTP_PASSWORD: "dqnb cbpe ltuk srkj",
+    SMTP_FROM_EMAIL: "noreply@bookly.com",
+    SMPTP_FROM_NAME: "Bookly"
   },
   images: {
     domains: ["res.cloudinary.com"],

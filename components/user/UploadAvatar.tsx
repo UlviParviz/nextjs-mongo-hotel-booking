@@ -79,7 +79,7 @@ const UploadAvatar = () => {
     <div className="row wrapper">
       <div className="col-10 col-lg-8">
         <form className="shadow rounded bg-body" onSubmit={submitHandler}>
-          <h1 className="mb-3 stays-heading text-center">Upload Avatar</h1>
+          <h2 className="mb-3 stays-heading text-center">Upload Avatar</h2>
 
           <div className="form-group">
             <div className="d-flex align-items-center">
