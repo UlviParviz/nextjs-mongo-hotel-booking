@@ -1,15 +1,15 @@
-import UpdatePassword from '@/components/user/UpdatePassword'
-import React from 'react'
+import UpdatePassword from "@/components/user/UpdatePassword";
+import React from "react";
 
-const metadata = {
-  title: 'Update Password - Bookly',
-}
+export const metadata = {
+  title: "Update Password - Bookly",
+};
 const UpdatePasswordPage = () => {
   return (
     <div>
-        <UpdatePassword/>
+      <UpdatePassword />
     </div>
-  )
-}
+  );
+};
 
-export default UpdatePasswordPage
+export default UpdatePasswordPage;

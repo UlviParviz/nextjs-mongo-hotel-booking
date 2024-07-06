@@ -1,8 +1,10 @@
-"use client"
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 
 const UserSidebar = () => {
+  const pathname = usePathname()
   const menuItem = [
     {
       name: "Update Profile",
@@ -21,7 +23,7 @@ const UserSidebar = () => {
     },
   ];
 
-  const [activeMenuItem, setActiveMenuItem] = useState(menuItem[0].name);
+  const [activeMenuItem, setActiveMenuItem] = useState(pathname);
 
   const handleMenuItemClick = (menuItem: string) => {
     setActiveMenuItem(menuItem);
@@ -33,10 +35,10 @@ const UserSidebar = () => {
           href={item?.url}
           key={index}
           className={`fw-bold list-group-item list-group-item-action ${
-            activeMenuItem === item.name ? "active" : ""
+            activeMenuItem === item.url ? "active" : ""
           }`}
-          aria-current={activeMenuItem === item.name ? "true" : "false"}
-          onClick={() => handleMenuItemClick(item.name)}
+          onClick={() => handleMenuItemClick(item.url)}
+          aria-current={activeMenuItem === item.url ? "true" : "false"}
         >
           <i className={`${item?.icon} fa-fw pe-2`}></i>
           {item?.name}

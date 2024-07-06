@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { catchAsyncErrors } from "../middlewares/catchAsyncErrors";
 import User from "../models/user.model";
 import ErrorHandler from "../utils/errorHandler";
+import { delete_file, upload_file } from "../utils/cloudinary";
 
 // Register user  =>  /api/auth/register
 export const registerUser = catchAsyncErrors(async (req: NextRequest) => {
@@ -55,5 +56,25 @@ export const updatePassword = catchAsyncErrors(async (req: NextRequest) => {
   return NextResponse.json({
     success: true,
     user,
+  });
+});
+
+// Upload Avatar  =>  /api/me/upload_avatar
+export const uploadAvatar = catchAsyncErrors(async (req: NextRequest) => {
+  const body = await req.json();
+
+  const avatarResponse = await upload_file(body?.avatar, "bookit/avatars")
+
+  //Remove avatar from cloudinary
+  if(req?.user?.avatar?.public_id ){
+    delete_file(req?.user?.avatar?.public_id)
+  }
+
+  const user = await User.findByIdAndUpdate(req?.user?._id, {
+    avatar: avatarResponse
+  })
+
+  return NextResponse.json({
+    success: true,
   });
 });
