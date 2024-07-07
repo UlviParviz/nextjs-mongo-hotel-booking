@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import Room, { IRoom } from "../models/room.model";
 import ErrorHandler from "../utils/errorHandler";
 import { catchAsyncErrors } from "../middlewares/catchAsyncErrors";
-import APIFilters from "../utils/apiFilters";
+import APIFilters from "../utils/filters";
 
 // Get all rooms  =>  /api/rooms
 export const allRooms = catchAsyncErrors(async (req: NextRequest) => {

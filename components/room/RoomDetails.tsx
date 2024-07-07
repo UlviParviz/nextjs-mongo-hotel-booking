@@ -65,7 +65,7 @@ const RoomDetails = ({ data }: Props) => {
         </div>
 
         <div className="col-12 col-md-6 col-lg-4">
-          <BookingDatePicker />
+          <BookingDatePicker room={room} />
           {room?.location && (
             <div className="my-5">
               <h4  className="my-4">
