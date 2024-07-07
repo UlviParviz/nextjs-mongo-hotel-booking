@@ -1,5 +1,5 @@
 import dbConnect from "@/server/config/db.connect";
-import { uploadAvatar } from "@/server/controllers/auth.controller";
+import { uploadAvatar } from "@/server/controllers/auth.controllers";
 import { isAuthenticatedUser } from "@/server/middlewares/auth";
 import { createEdgeRouter } from "next-connect";
 import { NextRequest } from "next/server";

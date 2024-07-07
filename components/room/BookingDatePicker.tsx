@@ -1,5 +1,7 @@
 "use client";
 
+import { calculateDaysOfStay } from "@/helpers/helpers";
+import { useNewBookingMutation } from "@/redux/api/bookingApi";
 import { IRoom } from "@/server/models/room.model";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
@@ -13,6 +15,9 @@ interface Props {
 const BookingDatePicker = ({ room }: Props) => {
   const [checkInDate, setCheckInDate] = useState(new Date());
   const [checkOutDate, setCheckOutDate] = useState(new Date());
+  const [daysOfStay, setDaysOfStay] = useState(0);
+
+  const [newBooking, { isLoading, error, isSuccess }] = useNewBookingMutation();
 
   const onChange = (dates: Date[]) => {
     const [checkInDate, checkOutDate] = dates;
@@ -21,9 +26,25 @@ const BookingDatePicker = ({ room }: Props) => {
     setCheckOutDate(checkOutDate);
 
     if (checkInDate && checkOutDate) {
-      console.log(checkInDate);
-      console.log(checkOutDate);
+      const days = calculateDaysOfStay(checkInDate, checkOutDate);
+
+      setDaysOfStay(days);
     }
+  };
+
+  const bookRoom = () => {
+    const bookingData = {
+      room: room?._id,
+      checkInDate,
+      checkOutDate,
+      daysOfStay,
+      amountPaid: room.pricePerNight * daysOfStay,
+      paymentInfo: {
+        id: "STRIPE_ID",
+        status: "PAID",
+      },
+    };
+    newBooking(bookingData);
   };
 
   return (
@@ -43,6 +64,9 @@ const BookingDatePicker = ({ room }: Props) => {
         selectsRange
         inline
       />
+      <button onClick={bookRoom} className="btn btn-danger py-3 form-btn w-100">
+        Pay
+      </button>
     </div>
   );
 };

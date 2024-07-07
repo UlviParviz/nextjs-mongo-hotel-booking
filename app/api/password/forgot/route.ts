@@ -1,5 +1,5 @@
 import dbConnect from "@/server/config/db.connect";
-import { forgotPassword } from "@/server/controllers/auth.controller";
+import { forgotPassword } from "@/server/controllers/auth.controllers";
 import { createEdgeRouter } from "next-connect";
 import { NextRequest } from "next/server";
 
