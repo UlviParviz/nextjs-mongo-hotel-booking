@@ -3,3 +3,5 @@ declare module "react-bootstrap";
 declare module "react-js-pagination";
 declare module "bcryptjs";
 declare module "nodemailer";
+declare module "node-geocoder";
+declare module "mapbox-gl/dist/mapbox-gl.js";

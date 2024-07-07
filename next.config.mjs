@@ -11,11 +11,15 @@ const nextConfig = {
     NEXTAUTH_SECRET: "SKADHAOISDJASKDADSA",
     SMTP_SERVICE: "gmail",
     SMTP_HOST: "smtp.gmail.com",
-    SMTP_PORT: 2525,
+    SMTP_PORT: "2525",
     SMPTP_USER: "fisfusfoz@gmail.com",
     SMTP_PASSWORD: "dqnb cbpe ltuk srkj",
     SMTP_FROM_EMAIL: "noreply@bookly.com",
-    SMPTP_FROM_NAME: "Bookly"
+    SMPTP_FROM_NAME: "Bookly",
+    GEOCODER_API_KEY: "KfENWWQ2dgYbJRLVj5akc2N3zbsMLiGs",
+    GEOCODER_PROVIDER: "mapquest",
+    MAPBOX_ACCESS_TOKEN:
+      "pk.eyJ1IjoidWx2aXNwYWV0aGUiLCJhIjoiY2x5Ym9ibzhrMDRlejJrcGwyNW5keXJtaSJ9.wOA93A1XW-Qamu0KzCIZNw",
   },
   images: {
     domains: ["res.cloudinary.com"],

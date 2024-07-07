@@ -1,14 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
-
-export interface ILocation {
-  type: string;
-  coordinates: number[];
-  formattedAddress: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  country: string;
-}
+import geoCoder from "../utils/geocoder";
 
 export interface IImage extends Document {
   public_id: string;
@@ -19,6 +10,16 @@ export interface IReview extends Document {
   user: mongoose.Schema.Types.ObjectId;
   rating: number;
   comment: string;
+}
+
+export interface ILocation {
+  type: string;
+  coordinates: number[];
+  formattedAddress: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  country: string;
 }
 
 export interface IRoom extends Document {
@@ -52,7 +53,7 @@ const roomSchema: Schema<IRoom> = new Schema({
   },
   description: {
     type: String,
-    required: [true, "Please enter room name"],
+    required: [true, "Please enter room description"],
   },
   pricePerNight: {
     type: Number,
@@ -160,6 +161,21 @@ const roomSchema: Schema<IRoom> = new Schema({
     type: Date,
     default: Date.now,
   },
+});
+
+// Setting up location
+roomSchema.pre("save", async function (next) {
+  const loc = await geoCoder.geocode(this.address);
+
+  this.location = {
+    type: "Point",
+    coordinates: [loc[0].longitude, loc[0].latitude],
+    formattedAddress: loc[0].formattedAddress,
+    city: loc[0].city,
+    state: loc[0].stateCode,
+    zipCode: loc[0].zipcode,
+    country: loc[0].countryCode,
+  };
 });
 
 export default mongoose.models.Room ||
