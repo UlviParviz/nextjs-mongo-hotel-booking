@@ -2,13 +2,14 @@
 
 import { calculateDaysOfStay } from "@/helpers/helpers";
 import {
+  useGetBookedDatesQuery,
   useLazyCheckBookingAvailabilityQuery,
   useNewBookingMutation,
 } from "@/redux/api/bookingApi";
 import { IRoom } from "@/server/models/room.model";
 import React, { useState } from "react";
-import DatePicker from "react-datepicker";
 
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 interface Props {
@@ -20,11 +21,17 @@ const BookingDatePicker = ({ room }: Props) => {
   const [checkOutDate, setCheckOutDate] = useState(new Date());
   const [daysOfStay, setDaysOfStay] = useState(0);
 
-  const [newBooking, { isLoading, error, isSuccess }] = useNewBookingMutation();
+  const [newBooking] = useNewBookingMutation();
+
   const [checkBookingAvailability, { data }] =
     useLazyCheckBookingAvailabilityQuery();
 
   const isAvailable = data?.isAvailable;
+
+  const { data: { bookedDates: dates } = {} } = useGetBookedDatesQuery(
+    room._id
+  );
+  const excludeDates = dates?.map((date: string) => new Date(date)) || [];
 
   const onChange = (dates: Date[]) => {
     const [checkInDate, checkOutDate] = dates;
@@ -64,10 +71,13 @@ const BookingDatePicker = ({ room }: Props) => {
   return (
     <div className="booking-card shadow p-4">
       <p className="price-per-night">
-        <b>${room?.pricePerNight}</b> / Night
+        <b>${room?.pricePerNight}</b> / night
       </p>
+
       <hr />
-      <p className="mt-5 mb-3">Pick Check In & Check Out Date</p>
+
+      <p className="mt5 mb-3">Pick Check In & Check Out Date</p>
+
       <DatePicker
         className="w-100"
         selected={checkInDate}
@@ -75,20 +85,23 @@ const BookingDatePicker = ({ room }: Props) => {
         startDate={checkInDate}
         endDate={checkOutDate}
         minDate={new Date()}
+        excludeDates={excludeDates}
         selectsRange
         inline
       />
+
       {isAvailable === true && (
         <div className="alert alert-success mt-3">
-          Room is available. Book now
+          Room is available. Book now.
         </div>
       )}
       {isAvailable === false && (
         <div className="alert alert-danger mt-3">
-          Room is not available. Try different dates
+          Room not available. Try different dates.
         </div>
       )}
-      <button onClick={bookRoom} className="btn btn-danger py-3 form-btn w-100">
+
+      <button style={{fontWeight: "bold"}} className="btn py-3 form-btn w-100 btn-danger" onClick={bookRoom}>
         Pay
       </button>
     </div>
