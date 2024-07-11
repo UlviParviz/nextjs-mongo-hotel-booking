@@ -65,13 +65,12 @@ export const checkRoomBookingAvailability = catchAsyncErrors(
   }
 );
 
-// Get Booked Dates   =>  /api/bookings/booked_dates
-export const getBookedDates = catchAsyncErrors(async (req: NextRequest) => {
+// Get room booked dates   =>  /api/bookings/get_booked_dates
+export const getRoomBookedDates = catchAsyncErrors(async (req: NextRequest) => {
   const { searchParams } = new URL(req.url);
-
   const roomId = searchParams.get("roomId");
 
-  const bookings: IBooking[] = await Booking.find({ room: roomId });
+  const bookings = await Booking.find({ room: roomId });
 
   const bookedDates = bookings.flatMap((booking) =>
     Array.from(
@@ -81,7 +80,9 @@ export const getBookedDates = catchAsyncErrors(async (req: NextRequest) => {
     )
   );
 
-  return NextResponse.json({ bookedDates });
+  return NextResponse.json({
+    bookedDates,
+  });
 });
 
 // Get current user bookings   =>  /api/bookings/me

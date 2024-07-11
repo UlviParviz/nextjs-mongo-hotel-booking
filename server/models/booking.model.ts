@@ -1,9 +1,9 @@
 import mongoose, { Document, Schema } from "mongoose";
-import { IRoom } from "./room.model";
 import { IUser } from "./user.model";
-
+import { IRoom } from "./room.model";
 
 export interface IBooking extends Document {
+  _id: string;
   room: IRoom;
   user: IUser;
   checkInDate: Date;

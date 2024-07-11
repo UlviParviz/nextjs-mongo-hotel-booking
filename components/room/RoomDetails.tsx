@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-import StarRatings from "react-star-ratings";
+// import StarRatings from "react-star-ratings";
 import RoomImageSlider from "./RoomImageSlider";
 import RoomFeatures from "./RoomFeatures";
 import BookingDatePicker from "./BookingDatePicker";
@@ -35,7 +35,7 @@ const RoomDetails = ({ data }: Props) => {
 
       new mapboxgl.Marker().setLngLat(coordinates).addTo(map);
     };
-    setMap();
+    if (room?.location) setMap();
   }, []);
 
   return (
@@ -68,9 +68,7 @@ const RoomDetails = ({ data }: Props) => {
           <BookingDatePicker room={room} />
           {room?.location && (
             <div className="my-5">
-              <h4  className="my-4">
-                Location
-              </h4>
+              <h4 className="my-4">Location</h4>
               <div
                 style={{ height: 350, width: "100%" }}
                 id="room-map"

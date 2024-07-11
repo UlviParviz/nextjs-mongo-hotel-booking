@@ -66,6 +66,7 @@ const BookingDatePicker = ({ room }: Props) => {
       },
     };
     newBooking(bookingData);
+    window.location.reload();
   };
 
   return (
@@ -101,7 +102,11 @@ const BookingDatePicker = ({ room }: Props) => {
         </div>
       )}
 
-      <button style={{fontWeight: "bold"}} className="btn py-3 form-btn w-100 btn-danger" onClick={bookRoom}>
+      <button
+        style={{ fontWeight: "bold" }}
+        className="btn py-3 form-btn w-100 btn-danger"
+        onClick={bookRoom}
+      >
         Pay
       </button>
     </div>

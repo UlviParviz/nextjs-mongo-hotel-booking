@@ -176,6 +176,8 @@ roomSchema.pre("save", async function (next) {
     zipCode: loc[0].zipcode,
     country: loc[0].countryCode,
   };
+
+  next();
 });
 
 export default mongoose.models.Room ||
