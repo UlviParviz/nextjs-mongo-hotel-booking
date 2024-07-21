@@ -9,6 +9,8 @@ const nextConfig = {
     CLOUDINARY_API_SECRET: "N6Jl1DxhyfuRZWLXxosniv9Xwxk",
     NEXTAUTH_URL: "http://localhost:3000",
     NEXTAUTH_SECRET: "SKADHAOISDJASKDADSA",
+    STRIPE_SECRET_KEY:
+      "sk_test_51Pf0bVRtQB5ckkuzIAyQFkllEUeh4MIGRnI4kBDdoyPoIe6qjKWGq7glIThEPVjW2s87rbOOQzbAWQhH80hroWRH00uGZQG9sr",
     SMTP_SERVICE: "gmail",
     SMTP_HOST: "smtp.gmail.com",
     SMTP_PORT: "2525",
