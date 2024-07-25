@@ -1,9 +1,9 @@
-import dbConnect from "@/server/config/db.connect";
-import User, { IUser } from "@/server/models/user.model";
-import { NextApiRequest, NextApiResponse } from "next";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
+import { NextRequest } from "next/server";
+import User, { IUser } from "@/server/models/user.model";
+import dbConnect from "@/server/config/db.connect";
 
 type Credentials = {
   email: string;
@@ -14,7 +14,7 @@ type Token = {
   user: IUser;
 };
 
-async function auth(req: NextApiRequest, res: NextApiResponse) {
+async function auth(req: NextRequest, res: any) {
   return await NextAuth(req, res, {
     session: {
       strategy: "jwt",
@@ -43,16 +43,18 @@ async function auth(req: NextApiRequest, res: NextApiResponse) {
           }
 
           return user;
+          
         },
       }),
     ],
     callbacks: {
       jwt: async ({ token, user }) => {
         const jwtToken = token as Token;
-
         user && (token.user = user);
 
-        if (req?.url?.includes("/api/auth/session?update")) {
+        // Update session when user is updated
+        if (req.url?.includes("/api/auth/session?update")) {
+          // Hit the database and return the updated user
           const updatedUser = await User.findById(jwtToken?.user?._id);
           token.user = updatedUser;
         }

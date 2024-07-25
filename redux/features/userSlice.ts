@@ -2,11 +2,11 @@ import { IUser } from "@/server/models/user.model";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface IUserState {
-  user: any;
+  user: IUser | null;
   isAuthenticated: boolean;
 }
 
-const initialState = {
+const initialState: IUserState = {
   user: null,
   isAuthenticated: false,
 };

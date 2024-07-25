@@ -2,12 +2,13 @@ import mongoose, { Schema, Document } from "mongoose";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 export interface IUser extends Document {
+  _id: string;
   name: string;
   email: string;
   password: string;
-  avatar: {
-    public_id: string;
-    url: string;
+  avatar : {
+    public_id: string ;
+    url: string ;
   };
   role: string;
   createdAt: Date;
