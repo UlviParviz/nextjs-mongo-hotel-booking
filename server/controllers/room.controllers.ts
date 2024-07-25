@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import Room, { IRoom } from "../models/room.model";
+import Room, { IReview, IRoom } from "../models/room.model";
 import ErrorHandler from "../utils/errorHandler";
 import { catchAsyncErrors } from "../middlewares/catchAsyncErrors";
 import APIFilters from "../utils/filters";
-
+import Booking from "../models/booking.model";
 // Get all rooms  =>  /api/rooms
 export const allRooms = catchAsyncErrors(async (req: NextRequest) => {
   const resPerPage: number = 4;
@@ -98,3 +98,59 @@ export const deleteRoom = catchAsyncErrors(
     });
   }
 );
+
+// Create/Update room review  =>  /api/reviews
+export const createRoomReview = catchAsyncErrors(async (req: NextRequest) => {
+  const body = await req.json();
+  const { rating, comment, roomId } = body;
+
+  const review = {
+    user: req.user._id,
+    rating: Number(rating),
+    comment,
+  };
+
+  const room = await Room.findById(roomId);
+
+  const isReviewed = room?.reviews?.find(
+    (r: IReview) => r.user?.toString() === req?.user?._id?.toString()
+  );
+
+  if (isReviewed) {
+    room?.reviews?.forEach((review: IReview) => {
+      if (review.user?.toString() === req?.user?._id?.toString()) {
+        review.comment = comment;
+        review.rating = rating;
+      }
+    });
+  } else {
+    room.reviews.push(review);
+    room.numOfReviews = room.reviews.length;
+  }
+
+  room.ratings =
+    room?.reviews?.reduce(
+      (acc: number, item: { rating: number }) => item.rating + acc,
+      0
+    ) / room?.reviews?.length;
+
+  await room.save();
+
+  return NextResponse.json({
+    success: true,
+  });
+});
+
+// Can user review room  =>  /api/reviews/can_review
+export const canReview = catchAsyncErrors(async (req: NextRequest) => {
+  const { searchParams } = new URL(req.url);
+  const roomId = searchParams.get("roomId");
+
+  const bookings = await Booking.find({ user: req.user._id, room: roomId });
+
+  const canReview = bookings?.length > 0 ? true : false;
+
+  return NextResponse.json({
+    canReview,
+  });
+});

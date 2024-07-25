@@ -11,7 +11,6 @@ import { useAppSelector } from "@/redux/hooks";
 import { IRoom } from "@/server/models/room.model";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import toast from "react-hot-toast";
@@ -25,53 +24,50 @@ interface CustomError extends Error {
 }
 
 const BookingDatePicker = ({ room }: Props) => {
-  const [checkInDate, setCheckInDate] = useState(new Date());
-  const [checkOutDate, setCheckOutDate] = useState(new Date());
+  const [checkInDate, setCheckInDate] = useState<Date | null>(null);
+  const [checkOutDate, setCheckOutDate] = useState<Date | null>(null);
   const [daysOfStay, setDaysOfStay] = useState(0);
 
   const router = useRouter();
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   const [newBooking] = useNewBookingMutation();
-
   const [checkBookingAvailability, { data }] =
     useLazyCheckBookingAvailabilityQuery();
+  const [stripeCheckout, { error, isLoading, data: checkoutData }] =
+    useLazyStripeCheckoutQuery();
 
   const isAvailable = data?.isAvailable;
 
-  const { data: { bookedDates: dates } = {} } = useGetBookedDatesQuery(
-    room._id
-  );
+  const { data: { bookedDates: dates } = {} } = useGetBookedDatesQuery(room._id);
   const excludeDates = dates?.map((date: string) => new Date(date)) || [];
 
-  const onChange = (dates: Date[]) => {
-    const [checkInDate, checkOutDate] = dates;
+  const onChange = (dates: [Date, Date] | null) => {
+    if (dates) {
+      const [checkIn, checkOut] = dates;
+      setCheckInDate(checkIn);
+      setCheckOutDate(checkOut);
 
-    setCheckInDate(checkInDate);
-    setCheckOutDate(checkOutDate);
+      if (checkIn && checkOut) {
+        const days = calculateDaysOfStay(checkIn, checkOut);
+        setDaysOfStay(days);
 
-    if (checkInDate && checkOutDate) {
-      const days = calculateDaysOfStay(checkInDate, checkOutDate);
-
-      setDaysOfStay(days);
-
-      // check booking availability
-      checkBookingAvailability({
-        id: room._id,
-        checkInDate: checkInDate.toISOString(),
-        checkOutDate: checkOutDate.toISOString(),
-      });
+        // Check booking availability
+        checkBookingAvailability({
+          id: room._id,
+          checkInDate: checkIn.toISOString(),
+          checkOutDate: checkOut.toISOString(),
+        });
+      }
     }
   };
-
-  const [stripeCheckout, { error, isLoading, data: checkoutData }] =
-    useLazyStripeCheckoutQuery();
 
   useEffect(() => {
     if (error && "data" in error) {
       const errorData = error.data as CustomError;
       toast.error(errorData.errMessage);
     }
+
     if (checkoutData) {
       router.replace(checkoutData?.url);
     }
@@ -80,34 +76,19 @@ const BookingDatePicker = ({ room }: Props) => {
   const bookRoom = () => {
     const amount = room.pricePerNight * daysOfStay;
     const checkoutData = {
-      checkInDate: checkInDate.toISOString(),
-      checkOutDate: checkOutDate.toISOString(),
+      checkInDate: checkInDate?.toISOString(),
+      checkOutDate: checkOutDate?.toISOString(),
       daysOfStay,
       amount,
     };
+
     stripeCheckout({ id: room._id, checkoutData });
   };
-
-  // const bookRoom = () => {
-  //   const bookingData = {
-  //     room: room?._id,
-  //     checkInDate,
-  //     checkOutDate,
-  //     daysOfStay,
-  //     amountPaid: room.pricePerNight * daysOfStay,
-  //     paymentInfo: {
-  //       id: "STRIPE_ID",
-  //       status: "PAID",
-  //     },
-  //   };
-  //   newBooking(bookingData);
-  //   window.location.reload();
-  // };
 
   return (
     <div className="booking-card shadow p-4">
       <p className="price-per-night">
-        <b>${room?.pricePerNight}</b> / night
+        <b>${room.pricePerNight}</b> / night
       </p>
 
       <hr />
@@ -127,28 +108,27 @@ const BookingDatePicker = ({ room }: Props) => {
       />
 
       {isAvailable === true && (
-        <div className="alert alert-success mt-3">
+        <div className="alert alert-success my-3">
           Room is available. Book now.
         </div>
       )}
       {isAvailable === false && (
-        <div className="alert alert-danger mt-3">
+        <div className="alert alert-danger my-3">
           Room not available. Try different dates.
         </div>
       )}
 
       {isAvailable && !isAuthenticated && (
-        <div className="alert alert-danger mt-3">Login to book room</div>
+        <div className="alert alert-danger my-3">Login to book room.</div>
       )}
 
       {isAvailable && isAuthenticated && (
         <button
-          style={{ fontWeight: "bold" }}
-          className="btn py-3 form-btn w-100 btn-danger"
+          className="btn py-3 form-btn w-100"
           onClick={bookRoom}
           disabled={isLoading}
         >
-          Pay - ${daysOfStay * room?.pricePerNight}
+          Pay - ${daysOfStay * room.pricePerNight}
         </button>
       )}
     </div>
