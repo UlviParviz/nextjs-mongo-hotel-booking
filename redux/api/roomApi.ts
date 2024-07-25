@@ -13,7 +13,14 @@ export const roomApi = createApi({
         };
       },
     }),
+    canUserReview: builder.query({
+      query(id) {
+        return {
+          url: `/reviews/can_review?roomId=${id}`,
+        };
+      },
+    }),
   }),
 });
 
-export const { usePostReviewMutation } = roomApi;
+export const { usePostReviewMutation, useCanUserReviewQuery } = roomApi;

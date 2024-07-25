@@ -6,7 +6,7 @@ import RoomImageSlider from "./RoomImageSlider";
 import RoomFeatures from "./RoomFeatures";
 import BookingDatePicker from "./BookingDatePicker";
 
-import { IRoom } from "@/server/models/room.model";
+import { IReview, IRoom } from "@/server/models/room.model";
 import ListReviews from "../review/ListReviews";
 import NewReview from "../review/NewReview";
 import mapboxgl from "mapbox-gl/dist/mapbox-gl.js";
@@ -80,7 +80,7 @@ const RoomDetails = ({ data }: Props) => {
       </div>
 
       <NewReview roomId={room?._id as string} />
-      <ListReviews />
+      <ListReviews reviews={room?.reviews} />
     </div>
   );
 };
