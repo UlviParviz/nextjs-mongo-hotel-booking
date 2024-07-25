@@ -124,7 +124,7 @@ const BookingDatePicker = ({ room }: Props) => {
 
       {isAvailable && isAuthenticated && (
         <button
-          className="btn py-3 form-btn w-100"
+          className="btn py-3 form-btn w-100 btn-danger"
           onClick={bookRoom}
           disabled={isLoading}
         >

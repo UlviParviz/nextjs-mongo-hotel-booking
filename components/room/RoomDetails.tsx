@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-// import StarRatings from "react-star-ratings";
+import StarRatings from "react-star-ratings";
 import RoomImageSlider from "./RoomImageSlider";
 import RoomFeatures from "./RoomFeatures";
 import BookingDatePicker from "./BookingDatePicker";
@@ -44,14 +44,14 @@ const RoomDetails = ({ data }: Props) => {
       <p>{room.address}</p>
 
       <div className="ratings mt-auto mb-3">
-        {/* <StarRatings
+        <StarRatings
           rating={room?.ratings}
           starRatedColor="#e61e4d"
           numberOfStars={5}
           starDimension="22px"
           starSpacing="1px"
           name="rating"
-        /> */}
+        />
         <span className="no-of-reviews">({room?.numOfReviews} Reviews)</span>
       </div>
       <RoomImageSlider images={room?.images} />
@@ -79,7 +79,7 @@ const RoomDetails = ({ data }: Props) => {
         </div>
       </div>
 
-      <NewReview />
+      <NewReview roomId={room?._id as string} />
       <ListReviews />
     </div>
   );

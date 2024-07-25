@@ -1,8 +1,42 @@
 "use client";
 
-import React from "react";
+import { usePostReviewMutation } from "@/redux/api/roomApi";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import StarRatings from "react-star-ratings";
 
-const NewReview = () => {
+interface CustomError extends Error {
+  errMessage: string;
+}
+
+const NewReview = ({ roomId }: { roomId: string }) => {
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+  const router = useRouter();
+
+  const [postReview, { error, isSuccess }] = usePostReviewMutation();
+
+  useEffect(() => {
+    if (error && "data" in error) {
+      const errorData = error.data as CustomError;
+      toast.error(errorData.errMessage);
+    }
+    if (isSuccess) {
+      toast.success("Review submitted successfully");
+      router.refresh();
+    }
+  }, [error, isSuccess]);
+
+  const submitHandler = () => {
+    const reviewData = {
+      rating,
+      comment,
+      roomId,
+    };
+
+    postReview(reviewData);
+  };
   return (
     <>
       <button
@@ -35,11 +69,28 @@ const NewReview = () => {
               ></button>
             </div>
             <div className="modal-body">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
-                consectetur, mi nec tristique vehicula, elit tellus vulputate
-                ex, nec bibendum libero elit at orci.
-              </p>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <StarRatings
+                  rating={rating}
+                  starRatedColor="#e61e4d"
+                  numberOfStars={5}
+                  starDimension="38px"
+                  starSpacing="1px"
+                  name="rating"
+                  changeRating={(e: any) => setRating(e)}
+                />
+              </div>
+              <div className="form-floating">
+                <textarea
+                  placeholder="Leave your review"
+                  id="review_field"
+                  className="mt-4 form-control"
+                  style={{ height: "100px" }}
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                ></textarea>
+                <label htmlFor="review_field">Comment</label>
+              </div>
             </div>
             <div className="modal-footer">
               <button
@@ -47,6 +98,7 @@ const NewReview = () => {
                 className="btn my-3 form-btn btn-danger w-100"
                 data-bs-dismiss="modal"
                 aria-label="Close"
+                onClick={submitHandler}
               >
                 Submit
               </button>
