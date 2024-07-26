@@ -18,7 +18,7 @@ const BookingDetails = ({ data }: Props) => {
     <div className="container">
       <div className="row d-flex justify-content-center">
         <div className="col-12 col-lg-9 mt-5 booking-details">
-          <div className="d-flex justify-content-between align-items-center my-5">
+          <div className="d-flex flex-column md:flex-row md:justify-content-between md:align-items-center my-5 gap-2">
             <h2>Booking # {booking?._id}</h2>
             <Link
               className="btn btn-success"
