@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import SalesStats from "./SalesStats";
 import { SalesChart } from "../charts/SalesCharts";
-// import { TopPerformingChart } from "../charts/TopPerformingChart";
+import { TopPerformingChart } from "../charts/TopPerformingChart";
 import { useLazyGetSalesStatsQuery } from "@/redux/api/bookingApi";
 import toast from "react-hot-toast";
 
@@ -84,7 +84,7 @@ const Dashboard = () => {
 
         <div className="col-12 col-lg-4 text-center">
           <h4 className="my-5">Top Performing Rooms</h4>
-          {/* <TopPerformingChart /> */}
+          <TopPerformingChart rooms={data?.topRooms} />
         </div>
       </div>
     </div>
