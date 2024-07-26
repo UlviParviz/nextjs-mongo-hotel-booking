@@ -170,7 +170,16 @@ body {
   font-weight: 700;
 }
 
+.banner-img {
+  height: 550px;
+  object-fit: cover;
+}
 
+@media (max-width: 768px) {
+  .banner-img {
+    height: 300px;
+  }
+}
 
 .wrapper form {
   padding: 1.2rem 2rem;
@@ -403,7 +412,6 @@ footer {
 .pagination .page-link:hover {
   color: #e61e4d !important;
 }
-
 
 /* Booking Details */
 .booking-details p {

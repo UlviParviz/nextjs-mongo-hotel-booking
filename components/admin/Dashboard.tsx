@@ -7,6 +7,7 @@ import { SalesChart } from "../charts/SalesCharts";
 import { TopPerformingChart } from "../charts/TopPerformingChart";
 import { useLazyGetSalesStatsQuery } from "@/redux/api/bookingApi";
 import toast from "react-hot-toast";
+import Loading from "@/app/loading";
 
 interface CustomError extends Error {
   errMessage: string;
@@ -38,9 +39,11 @@ const Dashboard = () => {
       endDate: endDate.toISOString(),
     });
   };
+
+  if(!data) return <Loading/>
   return (
     <div className="ps-4 my-5 ">
-      <div className="d-flex justify-content-start align-items-center">
+      <div className="d-block d-md-flex justify-content-start align-items-center">
         <div className="mb-3 me-4">
           <label htmlFor="" className="form-label d-block">
             Start Date
@@ -70,21 +73,25 @@ const Dashboard = () => {
         </div>
         <button
           onClick={submitHandler}
-          className="btn form-btn ms-4 mt-3 px-5 btn-danger"
+          className="btn form-btn ms-md-4 mt-3 px-5 btn-danger"
         >
           Fetch
         </button>
       </div>
       <SalesStats data={data} />
       <div className="row">
-        <div className="col-12 col-lg-8">
+        <div className="col-12 col-lg-7">
           <h4 className="my-5 text-center">Sales History</h4>
           <SalesChart salesData={data?.sixMonthSalesData} />
         </div>
 
-        <div className="col-12 col-lg-4 text-center">
+        <div className="col-12 col-lg-5 text-center">
           <h4 className="my-5">Top Performing Rooms</h4>
-          <TopPerformingChart rooms={data?.topRooms} />
+          {data?.topRooms?.length != 0 ? (
+            <TopPerformingChart rooms={data?.topRooms} />
+          ) : (
+            <p className="mt-5">No data available</p>
+          )}
         </div>
       </div>
     </div>

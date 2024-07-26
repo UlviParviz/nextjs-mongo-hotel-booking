@@ -15,13 +15,13 @@ const SalesStats = ({ data }: Props) => {
         <div className="card shadow ps-5">
           <div className="card-body">
             <div className="row">
-              <div className="col-2">
+              <div className="col-3">
                 <i
                   className="fas fa-dollar-sign fa-4x"
                   style={{ color: "#dbdee4" }}
                 ></i>
               </div>
-              <div className="col-10">
+              <div className="col-9">
                 <p className="card-title">Sales</p>
                 <p className="h4">
                   <b>{addCommasToAmount(data?.totalSales)}</b>
@@ -35,13 +35,13 @@ const SalesStats = ({ data }: Props) => {
         <div className="card shadow ps-5">
           <div className="card-body">
             <div className="row justify-content-between">
-              <div className="col-2">
+              <div className="col-3">
                 <i
                   className="fas fa-file-invoice fa-4x"
                   style={{ color: "#dbdee4" }}
                 ></i>
               </div>
-              <div className="col-10">
+              <div className="col-9">
                 <p className="card-title">Bookings</p>
                 <p className="h4">
                   <b>{data?.numberOfBookings}</b>
