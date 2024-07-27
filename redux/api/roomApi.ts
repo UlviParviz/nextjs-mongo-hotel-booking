@@ -13,6 +13,15 @@ export const roomApi = createApi({
         };
       },
     }),
+    newRoom: builder.mutation({
+      query(body) {
+        return {
+          url: "/admin/rooms",
+          method: "POST",
+          body,
+        };
+      },
+    }),
     canUserReview: builder.query({
       query(id) {
         return {
@@ -23,4 +32,8 @@ export const roomApi = createApi({
   }),
 });
 
-export const { usePostReviewMutation, useCanUserReviewQuery } = roomApi;
+export const {
+  usePostReviewMutation,
+  useCanUserReviewQuery,
+  useNewRoomMutation,
+} = roomApi;
