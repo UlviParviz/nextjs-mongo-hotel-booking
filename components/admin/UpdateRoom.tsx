@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import ButtonLoader from "../layout/ButtonLoader";
 import { IRoom } from "@/server/models/room.model";
+import { revalidateTag } from "@/helpers/revalidate";
 
 interface CustomError extends Error {
   errMessage: string;
@@ -59,8 +60,9 @@ const UpdateRoom = ({ data }: Props) => {
       toast.error(errorData.errMessage);
     }
     if (isSuccess) {
-      router.push("/admin/rooms");
+      revalidateTag("RoomDetails");
       toast.success("Room updated");
+      router.push("/admin/rooms");
       router.refresh();
     }
   }, [error, isSuccess]);
