@@ -1,7 +1,9 @@
 "use client";
+import { useDeleteRoomMutation } from "@/redux/api/roomApi";
 import { IRoom } from "@/server/models/room.model";
 import { MDBDataTable } from "mdbreact";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 interface Props {
@@ -12,6 +14,12 @@ interface Props {
 
 const AllRooms = ({ data }: Props) => {
   const rooms = data?.rooms;
+  const router = useRouter();
+  const [deleteRoom, { error, isSuccess }] = useDeleteRoomMutation();
+  const deleteRoomHandler = (id: string) => {
+    deleteRoom(id);
+    router.refresh();
+  };
   const setRooms = () => {
     const data: { columns: any; rows: any } = {
       columns: [
@@ -51,6 +59,7 @@ const AllRooms = ({ data }: Props) => {
             </Link>
             <button
               style={{ width: "100%" }}
+              onClick={() => deleteRoomHandler(room._id as string)}
               className="btn btn-outline-danger"
             >
               <i className="fa fa-trash"></i>
@@ -65,7 +74,10 @@ const AllRooms = ({ data }: Props) => {
 
   return (
     <div>
-      <h2 style={{fontWeight: "-moz-initial"}} className="text-center my-2">{`${rooms?.length} Rooms`}</h2>
+      <h2
+        style={{ fontWeight: "-moz-initial" }}
+        className="text-center my-2"
+      >{`${rooms?.length} Rooms`}</h2>
       <div className="">
         <Link
           href={"/admin/rooms/new"}

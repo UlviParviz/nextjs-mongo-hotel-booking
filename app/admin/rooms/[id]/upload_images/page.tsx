@@ -1,9 +1,10 @@
 import Error from "@/app/error";
 import UpdateRoom from "@/components/admin/UpdateRoom";
+import UploadRoomImages from "@/components/admin/UploadRoomImages";
 import { getAuthHeader } from "@/helpers/authHeader";
 
 export const metadata = {
-  title: "Update Rooms - Bookly",
+  title: "Upload Images - Bookly",
 };
 
 const getRoom = async (id: string) => {
@@ -15,7 +16,7 @@ const getRoom = async (id: string) => {
   return res.json();
 };
 
-export default async function AdminUpdateRoomPage({
+export default async function AdminUploadImagesPage({
   params,
 }: {
   params: { id: string };
@@ -25,5 +26,5 @@ export default async function AdminUpdateRoomPage({
     return <Error error={data} />;
   }
 
-  return <UpdateRoom data={data} />;
+  return <UploadRoomImages data={data} />;
 }
