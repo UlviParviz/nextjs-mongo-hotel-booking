@@ -21,14 +21,16 @@ const RoomReviews = () => {
 
   const reviews = data?.reviews || [];
 
-  const getRoomReviewsHandler = () => {
-    getRoomReviews(roomId);
-  };
-
   const [deleteReview, { isLoading, isSuccess }] = useDeleteReviewMutation();
   const deleteReviewHandler = (id: string) => {
     deleteReview({ id, roomId });
   };
+
+  useEffect(() => {
+    if (roomId) {
+      getRoomReviews(roomId);
+    }
+  }, [roomId, getRoomReviews]);
 
   useEffect(() => {
     if (error && "data" in error) {
@@ -40,7 +42,7 @@ const RoomReviews = () => {
       toast.success("Review deleted successfully");
       router.refresh();
     }
-  }, [error, isSuccess]);
+  }, [error, isSuccess, router]);
 
   const setReviews = () => {
     const data: { columns: any; rows: any } = {
@@ -94,13 +96,6 @@ const RoomReviews = () => {
               value={roomId}
               onChange={(e) => setRoomId(e.target.value)}
             />
-
-            <button
-              className="btn form-btn w-100 py-2 mt-3 btn-danger"
-              onClick={getRoomReviewsHandler}
-            >
-              Fetch Reviews
-            </button>
           </div>
         </div>
       </div>
@@ -113,7 +108,7 @@ const RoomReviews = () => {
           hover
         />
       ) : (
-        roomId != "" && (
+        roomId !== "" && (
           <h5 className="mt-5 text-center alert alert-danger">No Reviews</h5>
         )
       )}

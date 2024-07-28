@@ -11,11 +11,12 @@ import React, {
 import toast from "react-hot-toast";
 import ButtonLoader from "../layout/ButtonLoader";
 import Link from "next/link";
+import { registerUser } from "@/actions/actions";
+import SubmitButton from "../form/SubmitButton";
 
 interface CustomError extends Error {
   errMessage: string;
 }
-
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -35,7 +36,6 @@ const Register = () => {
     }
   };
 
-
   const { name, email, password } = user;
 
   const [register, { isLoading, error, isSuccess }] = useRegisterMutation();
@@ -43,7 +43,6 @@ const Register = () => {
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
-
 
   useEffect(() => {
     if (error && "data" in error) {
@@ -57,19 +56,28 @@ const Register = () => {
     }
   }, [error, isSuccess]);
 
-  const submitHandler = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const userData = {
-      name,
-      email,
-      password,
-    };
-    register(userData);
+  // const submitHandler = (e: FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   const userData = {
+  //     name,
+  //     email,
+  //     password,
+  //   };
+  //   register(userData);
+  // };
+
+  const submitHandler = async (formData: FormData) => {
+    const res = await registerUser(formData);
+    if (res?.error) return toast.error(res.error);
+    if (res?.isCreated) {
+      router.push("/login");
+      toast.success("Account registered successfully");
+    }
   };
   return (
     <div className="wrapper py-5 px-2">
       <div className="col-12 col-md-10 col-lg-6">
-        <form className="shadow rounded bg-body" onSubmit={submitHandler}>
+        <form className="shadow rounded bg-body" action={submitHandler}>
           <h1 className="mb-3 stays-heading text-center">Join Us</h1>
 
           <div className="mb-3">
@@ -82,8 +90,8 @@ const Register = () => {
               id="name_field"
               className="form-control"
               name="name"
-              value={name}
-              onChange={onChange}
+              // value={name}
+              // onChange={onChange}
             />
           </div>
 
@@ -97,8 +105,8 @@ const Register = () => {
               id="email_field"
               className="form-control"
               name="email"
-              value={email}
-              onChange={onChange}
+              // value={email}
+              // onChange={onChange}
             />
           </div>
 
@@ -112,8 +120,8 @@ const Register = () => {
                 id="password_field"
                 className="form-control"
                 name="password"
-                value={password}
-                onChange={onChange}
+                // value={password}
+                // onChange={onChange}
               />
               <div
                 onClick={toggleShow}
@@ -133,14 +141,10 @@ const Register = () => {
               </div>
             </div>
           </div>
-
-          <button
-            disabled={isLoading}
-            type="submit"
+          <SubmitButton
+            text="Register"
             className="btn btn-danger form-btn w-100 py-2"
-          >
-            {isLoading ? <ButtonLoader /> : "Sign Up"}
-          </button>
+          />
           <div className="mt-3 mb-4">
             <Link href="/login" className="float-end">
               Already have an account? Login

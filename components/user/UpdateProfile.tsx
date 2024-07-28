@@ -1,5 +1,8 @@
 "use client";
-import { useLazyUpdateSessionQuery, useUpdateProfileMutation } from "@/redux/api/userApi";
+import {
+  useLazyUpdateSessionQuery,
+  useUpdateProfileMutation,
+} from "@/redux/api/userApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { IUser } from "@/server/models/user.model";
 import { useRouter } from "next/navigation";
@@ -18,14 +21,15 @@ const UpdateProfile = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   const router = useRouter();
-  const [updateProfile, { isLoading, isSuccess, error }] = useUpdateProfileMutation();
+  const [updateProfile, { isLoading, isSuccess, error }] =
+    useUpdateProfileMutation();
 
-  const [updateSession, {data}] = useLazyUpdateSessionQuery()
+  const [updateSession, { data }] = useLazyUpdateSessionQuery();
 
-  if(data) dispatch(setUser(data?.user))
+  if (data) dispatch(setUser(data?.user));
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,8 +41,6 @@ const UpdateProfile = () => {
     (state: { auth: { user: IUser | null } }) => state.auth
   );
 
-
-
   useEffect(() => {
     if (currentUser) {
       setName(currentUser?.name);
@@ -46,11 +48,13 @@ const UpdateProfile = () => {
     }
 
     if (error && (error as IError).data?.message) {
-      toast.error((error as IError).data?.message || "An unexpected error occurred");
+      toast.error(
+        (error as IError).data?.message || "An unexpected error occurred"
+      );
     }
     if (isSuccess) {
       //@ts-ignore
-      updateSession()
+      updateSession();
       router.refresh();
     }
   }, [currentUser, isSuccess, error]);
@@ -60,7 +64,7 @@ const UpdateProfile = () => {
       <div className="row wrapper">
         <div className="col-11 col-md-10 col-lg-8">
           <form className="shadow rounded bg-body" onSubmit={submitHandler}>
-          <h2 className="mb-3 stays-heading text-center">Update Profile</h2>
+            <h2 className="mb-3 stays-heading text-center">Update Profile</h2>
 
             <div className="mb-3">
               <label htmlFor="name_field" className="form-label">
@@ -95,7 +99,7 @@ const UpdateProfile = () => {
               className="btn form-btn w-100 py-2 btn-danger"
               disabled={isLoading}
             >
-              {isLoading ? <ButtonLoader/> : "Update"}
+              {isLoading ? <ButtonLoader /> : "Update"}
             </button>
           </form>
         </div>
