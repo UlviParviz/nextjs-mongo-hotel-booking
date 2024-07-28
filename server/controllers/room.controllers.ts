@@ -193,7 +193,7 @@ export const createRoomReview = catchAsyncErrors(async (req: NextRequest) => {
       0
     ) / room?.reviews?.length;
 
-  await room.save();
+  await room.save({ validateBeforeSave: false });
 
   return NextResponse.json({
     success: true,
