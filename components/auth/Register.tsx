@@ -56,28 +56,28 @@ const Register = () => {
     }
   }, [error, isSuccess]);
 
-  // const submitHandler = (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   const userData = {
-  //     name,
-  //     email,
-  //     password,
-  //   };
-  //   register(userData);
-  // };
-
-  const submitHandler = async (formData: FormData) => {
-    const res = await registerUser(formData);
-    if (res?.error) return toast.error(res.error);
-    if (res?.isCreated) {
-      router.push("/login");
-      toast.success("Account registered successfully");
-    }
+  const submitHandler = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const userData = {
+      name,
+      email,
+      password,
+    };
+    register(userData);
   };
+
+  // const submitHandler = async (formData: FormData) => {
+  //   const res = await registerUser(formData);
+  //   if (res?.error) return toast.error(res.error);
+  //   if (res?.isCreated) {
+  //     router.push("/login");
+  //     toast.success("Account registered successfully");
+  //   }
+  // };
   return (
     <div className="wrapper py-5 px-2">
       <div className="col-12 col-md-10 col-lg-6">
-        <form className="shadow rounded bg-body" action={submitHandler}>
+        <form className="shadow rounded bg-body" onSubmit={submitHandler}>
           <h1 className="mb-3 stays-heading text-center">Join Us</h1>
 
           <div className="mb-3">
@@ -90,8 +90,8 @@ const Register = () => {
               id="name_field"
               className="form-control"
               name="name"
-              // value={name}
-              // onChange={onChange}
+              value={name}
+              onChange={onChange}
             />
           </div>
 
@@ -105,8 +105,8 @@ const Register = () => {
               id="email_field"
               className="form-control"
               name="email"
-              // value={email}
-              // onChange={onChange}
+              value={email}
+              onChange={onChange}
             />
           </div>
 
@@ -120,8 +120,8 @@ const Register = () => {
                 id="password_field"
                 className="form-control"
                 name="password"
-                // value={password}
-                // onChange={onChange}
+                value={password}
+                onChange={onChange}
               />
               <div
                 onClick={toggleShow}
