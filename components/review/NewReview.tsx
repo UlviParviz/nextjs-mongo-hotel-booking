@@ -4,6 +4,7 @@ import {
   useCanUserReviewQuery,
   usePostReviewMutation,
 } from "@/redux/api/roomApi";
+import { useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -13,7 +14,11 @@ interface CustomError extends Error {
   errMessage: string;
 }
 
-const NewReview = ({ roomId }: { roomId: string }) => {
+interface Props {
+  roomId: string;
+}
+
+const NewReview = ({ roomId }: Props) => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const router = useRouter();
@@ -40,7 +45,9 @@ const NewReview = ({ roomId }: { roomId: string }) => {
     };
 
     postReview(reviewData);
+    console.log(reviewData);
   };
+
   return (
     <>
       {canReview && (

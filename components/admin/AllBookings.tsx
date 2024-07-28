@@ -1,26 +1,27 @@
 "use client";
-import { useDeleteRoomMutation } from "@/redux/api/roomApi";
-import { IRoom } from "@/server/models/room.model";
+import { useDeleteBookingMutation } from "@/redux/api/bookingApi";
+import { IBooking } from "@/server/models/booking.model";
 import { MDBDataTable } from "mdbreact";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import toast from "react-hot-toast";
-
 interface Props {
   data: {
-    rooms: IRoom[];
+    bookings: IBooking[];
   };
 }
+
 interface CustomError extends Error {
   errMessage: string;
 }
-const AllRooms = ({ data }: Props) => {
-  const rooms = data?.rooms;
+
+const AllBookings = ({ data }: Props) => {
+  const bookings = data?.bookings;
   const router = useRouter();
-  const [deleteRoom, { error, isLoading, isSuccess }] = useDeleteRoomMutation();
-  const deleteRoomHandler = (id: string) => {
-    deleteRoom(id);
+  const [deleteBooking, { error,isLoading, isSuccess }] = useDeleteBookingMutation();
+  const deleteBookingHandler = (id: string) => {
+    deleteBooking(id);
   };
   useEffect(() => {
     if (error && "data" in error) {
@@ -28,24 +29,26 @@ const AllRooms = ({ data }: Props) => {
       toast.error(errorData.errMessage);
     }
     if (isSuccess) {
-      toast.success("Room deleted successfully");
+      toast.success("Booking deleted successfully");
       router.refresh();
     }
   }, [error, isSuccess]);
-  const setRooms = () => {
+  const setBookings = () => {
     const data: { columns: any; rows: any } = {
       columns: [
-        // { label: "Room ID", field: "id", sort: "asc" },
-        { label: "Name", field: "name", sort: "asc" },
+        { label: "Check In", field: "checkin", sort: "asc" },
+        { label: "Check Out", field: "checkout", sort: "asc" },
+        { label: "Amount Paid", field: "amountpaid", sort: "asc" },
         { label: "Actions", field: "actions", sort: "asc" },
       ],
       rows: [],
     };
 
-    rooms?.forEach((room) => {
+    bookings?.forEach((booking) => {
       data.rows.push({
-        // id: room?._id,
-        name: room?.name,
+        checkin: new Date(booking.checkInDate).toLocaleString("en-US"),
+        checkout: new Date(booking.checkOutDate).toLocaleString("en-US"),
+        amountpaid: `$${booking.amountPaid.toFixed(2)}`,
         actions: (
           <div
             style={{
@@ -57,22 +60,22 @@ const AllRooms = ({ data }: Props) => {
           >
             <Link
               style={{ width: "100%" }}
-              href={`/admin/rooms/${room?._id}`}
+              href={`/bookings/${booking._id}`}
               className="btn btn-outline-primary"
             >
-              <i className="fa fa-pencil"></i>
+              <i className="fa fa-eye"></i>
             </Link>
             <Link
               style={{ width: "100%" }}
-              href={`/admin/rooms/${room?._id}/upload_images`}
+              href={`/bookings/invoice/${booking?._id}`}
               className="btn btn-outline-success"
             >
-              <i className="fa fa-images"></i>
+              <i className="fa fa-receipt"></i>
             </Link>
             <button
               style={{ width: "100%" }}
               disabled={isLoading}
-              onClick={() => deleteRoomHandler(room._id as string)}
+              onClick={() => deleteBookingHandler(booking?._id as string)}
               className="btn btn-outline-danger"
             >
               <i className="fa fa-trash"></i>
@@ -90,26 +93,10 @@ const AllRooms = ({ data }: Props) => {
       <h2
         style={{ fontWeight: "-moz-initial" }}
         className="text-center my-2"
-      >{`${rooms?.length} Rooms`}</h2>
-      <div className="">
-        <Link
-          href={"/admin/rooms/new"}
-          className="btn text-white form-btn btn-danger my-3"
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "10px",
-            width: "200px",
-          }}
-        >
-          <span className="">Create Room</span>{" "}
-          <i className="fa-brands fa-pushed"></i>
-        </Link>
-      </div>
+      >{`${bookings?.length} Bookings`}</h2>
 
       <MDBDataTable
-        data={setRooms()}
+        data={setBookings()}
         displayEntries={false}
         bordered
         striped
@@ -119,4 +106,4 @@ const AllRooms = ({ data }: Props) => {
   );
 };
 
-export default AllRooms;
+export default AllBookings;

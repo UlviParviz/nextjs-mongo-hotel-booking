@@ -68,42 +68,47 @@ const Invoice = ({ data }: Props) => {
             </div>
           </header>
           <main>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <div className="service">Room</div>
-              <div className="service">{`${booking?.room?.name.substring(
-                0,
-                15
-              )}...`}</div>
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <div className="desc">Price Per Night</div>
-              <div className="desc">${booking?.room?.pricePerNight}</div>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <div className="desc">Check In Date</div>
-              <div className="unit">
-                {new Date(booking?.checkInDate).toLocaleString("en-US")}
+            {booking?.room ? (
+              <div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <div className="service">Room</div>
+                  <div className="service">{`${booking?.room?.name.substring(
+                    0,
+                    15
+                  )}...`}</div>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <div className="desc">Price Per Night</div>
+                  <div className="desc">${booking?.room?.pricePerNight}</div>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <div className="desc">Check In Date</div>
+                  <div className="unit">
+                    {new Date(booking?.checkInDate).toLocaleString("en-US")}
+                  </div>
+                </div>
               </div>
-            </div>
+            ) : (
+              ""
+            )}
 
             <div
               style={{

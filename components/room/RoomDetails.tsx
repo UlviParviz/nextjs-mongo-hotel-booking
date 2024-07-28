@@ -6,7 +6,7 @@ import RoomImageSlider from "./RoomImageSlider";
 import RoomFeatures from "./RoomFeatures";
 import BookingDatePicker from "./BookingDatePicker";
 
-import { IReview, IRoom } from "@/server/models/room.model";
+import { IRoom } from "@/server/models/room.model";
 import ListReviews from "../review/ListReviews";
 import NewReview from "../review/NewReview";
 import mapboxgl from "mapbox-gl/dist/mapbox-gl.js";

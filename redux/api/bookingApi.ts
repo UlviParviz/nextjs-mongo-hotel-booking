@@ -27,6 +27,14 @@ export const bookingApi = createApi({
         };
       },
     }),
+    deleteBooking: builder.mutation({
+      query(id) {
+        return {
+          url: `/admin/bookings/${id}`,
+          method: "DELETE",
+        };
+      },
+    }),
     getSalesStats: builder.query({
       query({ startDate, endDate }) {
         return {
@@ -56,4 +64,5 @@ export const {
   useGetBookedDatesQuery,
   useLazyStripeCheckoutQuery,
   useLazyGetSalesStatsQuery,
+  useDeleteBookingMutation,
 } = bookingApi;
