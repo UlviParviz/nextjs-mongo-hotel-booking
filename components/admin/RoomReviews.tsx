@@ -92,7 +92,7 @@ const RoomReviews = () => {
             <input
               type="text"
               id="roomId_field"
-              className="form-control"
+              className="form-control mt-2"
               value={roomId}
               onChange={(e) => setRoomId(e.target.value)}
             />
