@@ -1,13 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    API_URL: "https://bookly.vercel.app",
+    API_URL: "https://bookly-app.vercel.app",
     DB_LOCAL_URL: "mongodb://127.0.0.1:27017/nightwing",
     DB_URL: "mongodb+srv://ulvispaethe:lanadelrey@bookly.fbgn4yf.mongodb.net/",
     CLOUDINARY_CLOUD_NAME: "dbksfm68g",
     CLOUDINARY_API_KEY: "184162434569459",
     CLOUDINARY_API_SECRET: "N6Jl1DxhyfuRZWLXxosniv9Xwxk",
-    NEXTAUTH_URL: "https://bookly.vercel.app",
+    NEXTAUTH_URL: "https://bookly-app.vercel.app",
     NEXTAUTH_SECRET: "SKADHAOISDJASKDADSA",
     REVALIDATE_TOKEN: "JK34JASDASD0A",
     STRIPE_WEBHOOK_SECRET:
