@@ -18,10 +18,26 @@ router
   .use(isAuthenticatedUser, authorizeRoles("admin"))
   .delete(deleteRoomReview);
 
-export async function GET(request: NextRequest, ctx: RequestContext) {
-  return router.run(request, ctx);
+export async function GET(
+  request: NextRequest,
+  ctx: RequestContext
+): Promise<void | Response> {
+  const response = await router.run(request, ctx);
+  if (response instanceof Response) {
+    return response;
+  } else {
+    return new Response(null, { status: 200 });
+  }
 }
 
-export async function DELETE(request: NextRequest, ctx: RequestContext) {
-  return router.run(request, ctx);
+export async function DELETE(
+  request: NextRequest,
+  ctx: RequestContext
+): Promise<void | Response> {
+  const response = await router.run(request, ctx);
+  if (response instanceof Response) {
+    return response;
+  } else {
+    return new Response(null, { status: 200 });
+  }
 }

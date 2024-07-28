@@ -12,6 +12,14 @@ dbConnect();
 
 router.use(isAuthenticatedUser, authorizeRoles("admin")).get(getSalesStats);
 
-export async function GET(request: NextRequest, ctx: RequestContext) {
-  return router.run(request, ctx);
+export async function GET(request: NextRequest, ctx: RequestContext): Promise<void | Response> {
+  const response = await router.run(request, ctx);
+  
+  // Ensure the response is valid
+  if (response instanceof Response) {
+    return response;
+  }
+
+  // Return a default response if the controller does not return a Response
+  return new Response(null, { status: 200 });
 }
